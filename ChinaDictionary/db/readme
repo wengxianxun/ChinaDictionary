@@ -1,0 +1,66 @@
+
+
+使用方式： 在要用到的项目，把本目录拷贝进去(db目录)
+在Frameworks 导入 libsqlite3.dylib包
+
+
+po:  表的映射文件  
+
+db: 数据库操作类的父类
+
+FMDB: 数据库框架
+
+PenSoundDao:   数据库操作类  ：   本类用单例模式
+
+SQLiteExpertPersSetup.exe.重命名： window数据库工具，比较好用，创建数据库可以用这个创建
+
+MesaSQLite.app:   MAC数据库工具， 操作数据时可以用这个，不用去win下查看。
+
+
+使用方法： 
+
+//********************增加****************************************//
+-(void)insert{
+
+    UserData *usD = [[UserData alloc]init];
+    usD.username = @"wxx";
+    usD.password = @"123456";
+    //添加
+    [[PenSoundDao sharedPenSoundDao]insertUserData:usD];
+}
+
+
+//********************修改****************************************//
+-(void)update{
+    
+    UserData *usD = [[UserData alloc]init];
+    usD.username = @"wxx";   //条件
+    usD.password = @"秘密被修改了";
+    
+    //更新
+    [[PenSoundDao sharedPenSoundDao]updateUserData:usD];
+}
+
+
+//********************查询****************************************//
+-(void)select{
+
+    //查询
+    NSMutableArray *nsm =  [[PenSoundDao sharedPenSoundDao]selectUserData];
+
+    for (int i=0; i<[nsm count]; i++) {
+
+     UserData *usd =    [nsm objectAtIndex:i];
+        NSLog(@"%@--------%@",usd.username,usd.password);
+        
+    }
+}
+
+//********************删除****************************************//
+-(void)delete{
+
+    //删除
+    [[PenSoundDao sharedPenSoundDao]deleteUserData];
+}
+
+
